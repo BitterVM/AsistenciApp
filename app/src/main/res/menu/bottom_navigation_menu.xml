@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_estadisticas"
+        android:title="Estadísticas"
+        android:icon="@drawable/ic_estadistica" />
+    <item
+        android:id="@+id/menu_registro"
+        android:title="Registro"
+        android:icon="@drawable/ic_qr" />
+    <item
+        android:id="@+id/menu_lista"
+        android:title="Lista"
+        android:icon="@drawable/ic_lista" />
+
+</menu>
