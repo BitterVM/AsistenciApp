@@ -1,15 +1,15 @@
 package com.example.AsistenciApp.db;
 
-import static java.security.AccessController.getContext;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
 import android.widget.Toast;
 
-import java.sql.Struct;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,13 +46,14 @@ public class DbHelperPersonal extends SQLiteOpenHelper {
                 "RUT TEXT PRIMARY KEY," +
                 "EMPRESA TEXT," +
                 "ACTIVIDAD TEXT," +
-                "ACREDITADO INTEGER DEFAULT 0," +
+                "ACREDITADO INTEGER," +
                 "HORARIO TEXT)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        db.execSQL("DROP TABLE IF EXISTS " + "t_personal");
+        onCreate(db);
     }
 
     // Método para almacenar el horario actual en la bd
@@ -80,6 +81,7 @@ public class DbHelperPersonal extends SQLiteOpenHelper {
         else return false;
     }
 
+    //Recibe rut y nombre de columna, devuelve dato que se solicite
     public String obtenerDatoPorColumna(String rut, String nombreColumna) {
         String valor = null;
         Cursor cursor = this.getWritableDatabase().query("t_personal", null, "RUT=?", new String[]{rut}, null, null, null);

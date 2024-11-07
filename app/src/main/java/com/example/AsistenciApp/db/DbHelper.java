@@ -22,13 +22,21 @@ public class DbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE_USERS + "(" +
                 "usuario TEXT PRIMARY KEY," +
-                "password TEXT)");
-        String user = "admin";
-        String pass = "12345";
+                "password TEXT," +
+                "role TEXT)");
+
         ContentValues datosAdmin = new ContentValues();
-        datosAdmin.put("usuario", user);
-        datosAdmin.put("password", pass);
-        db.insert("t_users", "(usuario, password)", datosAdmin);
+        datosAdmin.put("usuario", "admin");
+        datosAdmin.put("password", "12345");
+        datosAdmin.put("role", "admin");
+        db.insert(TABLE_USERS, null, datosAdmin);
+
+        // Ejemplo de usuario normal
+        ContentValues datosUsuario = new ContentValues();
+        datosUsuario.put("usuario", "usuario");
+        datosUsuario.put("password", "6789");
+        datosUsuario.put("role", "user");
+        db.insert(TABLE_USERS, null, datosUsuario);
     }
 
     @Override
@@ -37,12 +45,17 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     //recibe usuario y contraseña y busca en la bd, retorna un boolean
-    public boolean checkUser(String user, String pass){
-        SQLiteDatabase bd = this.getWritableDatabase();
-        Cursor fila = bd.rawQuery("SELECT * FROM t_users WHERE usuario= ? AND password= ?", new String[]{user, pass});
+    public String checkUser(String user, String pass) {
+        SQLiteDatabase bd = this.getReadableDatabase();
+        Cursor fila = bd.rawQuery("SELECT role FROM t_users WHERE usuario = ? AND password = ?", new String[]{user, pass});
 
-        if (fila.getCount() > 0)
-            return true;
-        else return false;
+        if (fila.moveToFirst()) {
+            String role = fila.getString(0);
+            fila.close();
+            return role;
+        } else {
+            fila.close();
+            return null;
+        }
     }
 }

@@ -37,11 +37,19 @@ public class EstadisticasActivity extends AppCompatActivity {
         int total = dbPersonal.contarTotal();
         tv_total = findViewById(R.id.tv_total);
         btn_datos = findViewById(R.id.btn_datos);
-        int porcentajeT = (acreditados*100)/total;
+        int porcentajeT = 0;
+
+        if(total > 0){
+            porcentajeT = (acreditados*100)/total;
+        }else {
+            porcentajeT = 0;
+        }
+
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.menu_estadisticas);
 
         tv_total.setText( "Acreditados: " + acreditados + "/" + total + " ( "+ porcentajeT +"% )");
+
 
         btn_datos.setOnClickListener(v -> {
             File filePath = new File(getExternalFilesDir(null), "resumen_asistencia.xlsx");
@@ -60,7 +68,6 @@ public class EstadisticasActivity extends AppCompatActivity {
                     Intent listaIntent = new Intent(EstadisticasActivity.this, RegistroActivity.class);
                     startActivity(listaIntent);
                     return true;
-
                 } else if (itemId == R.id.menu_lista) {
                     Intent homeIntent = new Intent(EstadisticasActivity.this, ListaActivity.class);
                     startActivity(homeIntent);
@@ -90,4 +97,6 @@ public class EstadisticasActivity extends AppCompatActivity {
             Toast.makeText(this, "No hay aplicaciones de correo instaladas.", Toast.LENGTH_SHORT).show();
         }
     }
+
+
 }

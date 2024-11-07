@@ -30,14 +30,21 @@ public class LoginActivity extends AppCompatActivity {
         btn_login= (Button) findViewById(R.id.btn_login);
 
         btn_login.setOnClickListener(view -> {
-            boolean isLoggedId = dbHelper.checkUser(et_usuario.getText().toString().trim(), et_pass.getText().toString().trim());
-            if(isLoggedId){
-                Intent intent = new Intent(LoginActivity.this, RegistroActivity.class);
-                startActivity(intent);
-                finish();
+            String userRole = dbHelper.checkUser(et_usuario.getText().toString().trim(), et_pass.getText().toString().trim());
+
+            if (userRole != null) {
+                if (userRole.equals("admin")) {
+                    Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else if (userRole.equals("user")) {
+                    Intent intent = new Intent(LoginActivity.this, RegistroActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            } else {
+                Toast.makeText(this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show();
             }
-            else
-                Toast.makeText(LoginActivity.this, "Falló Login", Toast.LENGTH_LONG).show();
         });
     }
 

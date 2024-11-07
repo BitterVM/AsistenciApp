@@ -125,6 +125,7 @@ public class RegistroActivity extends AppCompatActivity {
     public void cerrarSesion(){
         Intent intent = new Intent(RegistroActivity.this, LoginActivity.class);
         startActivity(intent);
+        finish();
     }
 
     // Función para validar el formato del RUT
