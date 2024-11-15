@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.AsistenciApp">
+
     <!-- necesario para usar camara -->
     <uses-feature
         android:name="android.hardware.camera"
@@ -27,16 +29,10 @@
             android:name=".AdminActivity"
             android:exported="false" />
         <activity
-            android:name=".ListaActivity"
-            android:exported="false" />
-        <activity
-            android:name=".EstadisticasActivity"
-            android:exported="false" />
-        <activity
             android:name=".AcreditarActivity"
             android:exported="false" />
         <activity
-            android:name=".RegistroActivity"
+            android:name=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"

@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.AsistenciApp.db.DbHelper;
@@ -38,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 } else if (userRole.equals("user")) {
-                    Intent intent = new Intent(LoginActivity.this, RegistroActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
                 }
@@ -46,6 +47,23 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Crear un cuadro de diálogo de alerta
+        new AlertDialog.Builder(this)
+                .setMessage("¿Estás seguro de que quieres salir de la aplicación?")
+                .setCancelable(false)
+                .setPositiveButton("Sí", (dialog, id) -> {
+                    // Cerrar la aplicación
+                    finishAffinity();
+                    System.exit(0);
+                })
+                .setNegativeButton("No", (dialog, id) -> {
+                    dialog.dismiss();
+                })
+                .show();
     }
 
 }
